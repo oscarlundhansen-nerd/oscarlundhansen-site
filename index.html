@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Oscar Lund-Hansen</title>
+<meta name="description" content="Oscar Lund-Hansen — creative director.">
+<style>
+/* Layout: 7-col "constellation" (3 under 1048px). Every image is a 4:5 frame; one type size throughout; only columns scale. */
+:root{
+  --paper:#ffffff; --ink:#111110; --mute:#111110; --veil:rgba(255,255,255,.98); --ph:#f2f1ee;
+  --ui:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --cols:7; --gx:40px; --gy:20px; --pad:20px;
+  --ease:cubic-bezier(.49,0,.53,1);
+  color-scheme:light;
+}
+@media (max-width:1048px){:root{--cols:3;--gx:40px;--gy:30px}}
+@media (max-width:900px){:root{--gx:10px;--gy:20px}}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+img{max-width:100%}
+/* one font, one size */
+body{background:var(--paper);color:var(--ink);font-family:var(--ui);font-size:12px;font-weight:700;letter-spacing:0;line-height:1.15;
+  padding-left:max(var(--pad),env(safe-area-inset-left,0px));padding-right:max(var(--pad),env(safe-area-inset-right,0px));padding-block:0 120px}
+button{font:inherit;letter-spacing:inherit;color:inherit;text-transform:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:left}
+p,dl,dd,figure{margin:0}
+button:focus-visible{outline:1px solid var(--ink);outline-offset:3px}
+
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.bar{display:grid;grid-template-columns:1fr auto 1fr;align-items:start;gap:16px;padding-block:18px}
+header.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background:var(--paper)}
+.filters{display:flex;gap:18px;justify-self:center}
+.filters button{display:inline-flex;align-items:center;gap:6px}
+/* radio-style marker: ring always, centre dot when active */
+.dot{width:9px;height:9px;border:1px solid currentColor;border-radius:50%;flex:none;display:grid;place-items:center}
+.dot::after{content:"";width:3px;height:3px;border-radius:50%;background:currentColor}
+.filters button[aria-pressed="false"] .dot::after{visibility:hidden}
+.right{display:flex;gap:18px;justify-self:end}
+.bar>:first-child{justify-self:start}
+
+.grid{display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));column-gap:var(--gx);row-gap:var(--gy);padding-top:clamp(40px,6vw,100px)}
+.card{display:flex;flex-direction:column;gap:20px;min-width:0}
+@media (max-width:900px){.card{gap:12px}}
+.frame{aspect-ratio:4/5;max-width:100%;width:100%;position:relative;overflow:hidden;cursor:zoom-in;transition:opacity .4s var(--ease)}
+.frame .img{position:absolute;inset:0}
+.img img{width:100%;height:100%;object-fit:cover;display:block}
+.card{transition:transform .5s var(--ease);will-change:transform}
+.cap{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;transition:opacity .4s var(--ease)}
+@media (hover:hover) and (pointer:fine){
+  .grid.hovering .card:not(.on) .frame{opacity:.06}
+  .grid.hovering .card:not(.on) .cap{opacity:0}
+  .grid.hovering .card.on{transform:scale(1.04)}
+}
+@media (max-width:1048px){.frame,.cap{transition:none}}
+
+.lb{position:fixed;inset:0;z-index:20;background:var(--veil);display:grid;grid-template-rows:auto minmax(0,1fr) auto;grid-template-columns:minmax(0,1fr);
+  padding:calc(18px + env(safe-area-inset-top,0px)) max(var(--pad),env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) max(var(--pad),env(safe-area-inset-left,0px))}
+.lb-top,.lb-bot{display:flex;justify-content:space-between;gap:16px}
+.lb-stage{display:grid;place-items:center;min-height:0;min-width:0;padding-block:24px;cursor:zoom-out;container-type:size}
+/* full image at its own proportions, fitted inside the stage */
+.lb-img{display:grid;place-items:center;min-height:0;min-width:0}
+/* sized to the stage itself, so tall and wide images always fit */
+.lb-img img{cursor:pointer;width:auto;height:auto;max-width:100%;max-height:calc(100vh - 140px);object-fit:contain;display:block}
+@supports (height:1cqh){.lb-img img{max-width:100cqw;max-height:100cqh}}
+.lb-nav{display:flex;gap:18px}
+/* thin black chevron cursors on desktop: left half of the image goes back, right half forward */
+@media (hover:hover) and (pointer:fine){
+  .lb-stage[data-dir="prev"] img{cursor:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2210%22%20height%3D%2216%22%20viewBox%3D%220%200%2010%2016%22%3E%3Cpath%20d%3D%22M8%201L1%208l7%207%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E") 5 8, w-resize}
+  .lb-stage[data-dir="next"] img{cursor:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2210%22%20height%3D%2216%22%20viewBox%3D%220%200%2010%2016%22%3E%3Cpath%20d%3D%22M2%201l7%207-7%207%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E") 5 8, e-resize}
+}
+
+
+.info{position:fixed;inset:0;z-index:15;background:var(--veil);overflow:auto;
+  padding:env(safe-area-inset-top,0px) max(var(--pad),env(safe-area-inset-right,0px)) 60px max(var(--pad),env(safe-area-inset-left,0px))}
+/* info: a centred title page, same type as the rest of the site */
+.info{display:flex;flex-direction:column}
+.info[hidden]{display:none}
+.info-in{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:28px;max-width:46ch;margin-inline:auto;padding-block:40px 80px}
+.info h1{font:inherit;margin:0}
+.info .role{margin-top:-20px}
+.info .bio{text-wrap:balance}
+.info dl{display:grid;gap:14px;margin:0}
+.info dd{margin:0}
+
+@media (max-width:720px){
+  .bar{grid-template-columns:1fr auto;row-gap:10px}
+  .filters{grid-column:1/3;grid-row:2;justify-self:start}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <button data-act="home">Oscar Lund-Hansen</button>
+  <nav class="filters" aria-label="Filter">
+    <button data-f="editorial" aria-pressed="true"><span class="dot"></span>Editorial</button>
+    <button data-f="commercial" aria-pressed="true"><span class="dot"></span>Commercial</button>
+  </nav>
+  <div class="right"><button data-act="info">Info</button></div>
+</header>
+
+<main class="grid" id="grid"></main>
+
+<section class="info" id="info" hidden role="dialog" aria-label="Info">
+  <div class="bar">
+    <span>Oscar Lund-Hansen</span>
+    <span></span>
+    <button data-act="info-close" class="right">Close</button>
+  </div>
+  <!-- one centred column, read top to bottom like a title page -->
+  <div class="info-in">
+    <h1>Oscar Lund-Hansen</h1>
+    <p class="role">Creative Director</p>
+    <p class="bio">Oscar Lund-Hansen is a creative director working across brand direction, content and visual identity.</p>
+    <dl>
+      <div><dt>Services</dt><dd>Brand direction, content production, visual identity</dd></div>
+      <div><dt>Contact</dt><dd>oscar@oscarlundhansen.com</dd></div>
+      <div><dt>Instagram</dt><dd>@oscarlundhansen</dd></div>
+    </dl>
+    <p class="sign">Stockholm</p>
+  </div>
+</section>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Image">
+  <div class="lb-top"><span id="lbCap"></span><button data-act="close">Close</button></div>
+  <div class="lb-stage" id="lbStage"><div class="lb-img" id="lbImg"></div></div>
+  <div class="lb-bot"><span id="lbCount"></span><div class="lb-nav"><button data-act="prev">Prev</button><button data-act="next">Next</button></div></div>
+</div>
+
+<script>
+/* ===== THE LIBRARY — the only thing you edit to update the site =====
+   1. Put the image in the images/ folder (jpg, ~2000px long side, ideally already 4:5).
+   2. Add a line at the TOP of the list:
+        {type:"editorial", title:"Vogue Scandinavia: Photographer", src:"images/filename.jpg"},
+      type is "editorial" or "commercial". Newest first.
+   3. Drag the whole folder into Netlify (Deploys tab). Done.
+   Lines without src show a tonal placeholder; delete them once real images are in. */
+const LIBRARY = [
+  {type:"commercial",title:"Dior Rouge", src:"images/dior-rouge.jpg"},
+  {type:"commercial",title:"Tove Studio", src:"images/tove-studio.jpg"},
+  {type:"commercial",title:"Prada Footwear", src:"images/prada-footwear.jpg"},
+  {type:"commercial",title:"Dolce & Gabbana", src:"images/dolce-gabbana-01.jpg"},
+  {type:"commercial",title:"Dolce & Gabbana", src:"images/dolce-gabbana-02.jpg"},
+  {type:"commercial",title:"Miu Miu Eyewear", src:"images/miu-miu-eyewear.jpg"},
+  {type:"commercial",title:"Glossier Texture", src:"images/glossier-texture.jpg"},
+  {type:"editorial", title:"Wallpaper* Studio Visit", src:"images/wallpaper-studio.jpg"},
+  {type:"editorial", title:"i-D", src:"images/i-d-editorial.jpg"},
+  {type:"commercial",title:"Ade Cropper Lookbook", src:"images/ade-cropper-lookbook.jpg"},
+  {type:"editorial", title:"Self Service", src:"images/self-service-editorial.jpg"},
+  {type:"editorial", title:"Vogue Italia", src:"images/vogue-italia-editorial.jpg"},
+  {type:"commercial",title:"Aesop Still Life", src:"images/aesop-still-life.jpg"},
+  {type:"commercial",title:"EA7 Campaign", src:"images/ea7-campaign.jpg"},
+  {type:"editorial", title:"Dazed Beauty", src:"images/dazed-editorial.jpg"},
+  {type:"commercial",title:"Barbour Campaign", src:"images/barbour-commercial.jpg"},
+  {type:"editorial", title:"Loewe Editorial", src:"images/loewe-editorial.jpg"},
+];
+
+function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const bg=t=>`radial-gradient(120% 90% at 30% 25%, ${t[0]} 0%, transparent 60%), radial-gradient(90% 80% at 75% 85%, ${t[1]} 0%, transparent 70%), linear-gradient(160deg, ${t[0]}, ${t[1]})`;
+const pad2=n=>String(n).padStart(2,'0');
+
+const grid=document.getElementById('grid');
+const SEED=Math.floor(Math.random()*1e9);
+// shuffle once per visit, so every refresh gives a new order
+const ORDER=(()=>{const r=rng(SEED),a=LIBRARY.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a})();
+const on={editorial:true,commercial:true};
+let view=[];
+
+function render(){
+  view=ORDER.filter(i=>on[i.type]);
+  if(!view.length)return;
+  const cols=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--cols'))||7;
+  const r=rng(SEED+7);
+  grid.innerHTML='';
+  let i=0,row=1;
+  while(i<view.length){
+    const k=cols>=7?2+Math.floor(r()*3):1+Math.floor(r()*2);
+    const slots=[...Array(cols).keys()].sort(()=>r()-.5).slice(0,k).sort((a,b)=>a-b);
+    for(const c of slots){
+      if(i>=view.length)break;
+      const it=view[i],idx=i;
+      const card=document.createElement('figure');
+      card.className='card';card.style.cssText=`grid-column:${c+1};grid-row:${row}`;
+      card.innerHTML=`<button class="frame" aria-label="Open ${it.title}"><div class="img" style="background:${it.src?'var(--ph)':bg(it.tone)}">${it.src?`<img src="${it.src}" alt="${it.title}" loading="lazy">`:''}</div></button>
+        <figcaption class="cap"><span>${it.title}</span></figcaption>`;
+      card.addEventListener('mouseenter',()=>{grid.classList.add('hovering');card.classList.add('on')});
+      card.addEventListener('mouseleave',()=>{grid.classList.remove('hovering');card.classList.remove('on')});
+      card.querySelector('.frame').onclick=()=>openLB(idx);
+      grid.appendChild(card);i++;
+    }
+    row++;
+  }
+}
+
+/* lightbox: steps through every image of every item */
+const lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg');
+let li=0;
+function openLB(i){
+  li=(i+view.length)%view.length;const it=view[li];
+  lbImg.innerHTML=`<img src="${it.src}" alt="${it.title}">`;
+  document.getElementById('lbCap').textContent=it.title;
+  document.getElementById('lbCount').textContent=`${pad2(li+1)} / ${pad2(view.length)}`;
+  lb.hidden=false;document.body.style.overflow='hidden';
+}
+function closeLB(){lb.hidden=true;document.body.style.overflow=''}
+// click the left half of the image to go back, the right half to go forward; click around it to close
+const stage=document.getElementById('lbStage');
+const side=e=>{const r=e.target.getBoundingClientRect();return e.clientX<r.left+r.width/2?'prev':'next'};
+stage.addEventListener('mousemove',e=>{if(e.target.tagName==='IMG')stage.dataset.dir=side(e)});
+stage.onclick=e=>{if(e.target.tagName==='IMG'){const d=side(e);openLB(li+(d==='prev'?-1:1));stage.dataset.dir=d}else closeLB()};
+document.addEventListener('keydown',e=>{if(lb.hidden)return;if(e.key==='Escape')closeLB();if(e.key==='ArrowRight')openLB(li+1);if(e.key==='ArrowLeft')openLB(li-1)});
+let sx=null;lb.addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});
+lb.addEventListener('touchend',e=>{if(sx==null)return;const d=e.changedTouches[0].clientX-sx;if(Math.abs(d)>50)openLB(li+(d<0?1:-1));sx=null});
+
+const info=document.getElementById('info');
+document.addEventListener('click',e=>{const a=e.target.closest('[data-act]')?.dataset.act;if(!a)return;
+  if(a==='close')closeLB();if(a==='prev')openLB(li-1);if(a==='next')openLB(li+1);
+  if(a==='info'){info.hidden=false;document.body.style.overflow='hidden'}
+  if(a==='info-close'){info.hidden=true;document.body.style.overflow=''}
+  if(a==='home'){info.hidden=true;scrollTo({top:0,behavior:'smooth'})}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!info.hidden){info.hidden=true;document.body.style.overflow=''}});
+document.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{
+  const f=b.dataset.f,other=f==='editorial'?'commercial':'editorial';
+  if(on[f]&&!on[other])return;
+  on[f]=!on[f];b.setAttribute('aria-pressed',on[f]);render()});
+matchMedia('(max-width:1048px)').addEventListener('change',render);
+render();
+</script>
+</body>
+</html>
