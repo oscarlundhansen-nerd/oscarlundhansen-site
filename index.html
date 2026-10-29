@@ -43,7 +43,9 @@ header.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background
 /* even grid: every cell filled in order, same cell size; each image shown whole at its own ratio inside its cell */
 .grid{display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));column-gap:var(--gx);row-gap:var(--gy);padding-top:clamp(40px,6vw,100px)}
 .grid .frame .img{background:none!important}
-.grid .img img{object-fit:contain;object-position:center bottom}
+/* square cells, image centred in its cell at its own ratio, like the reference */
+.grid .frame{aspect-ratio:1/1}
+.grid .img img{object-fit:contain;object-position:center center}
 /* captions hidden but still take their space, so the spacing stays the same */
 .grid .cap{visibility:hidden}
 .card{display:flex;flex-direction:column;gap:20px;min-width:0}
