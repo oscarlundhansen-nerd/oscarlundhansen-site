@@ -40,18 +40,7 @@ header.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background
 .right{display:flex;gap:18px;justify-self:end}
 .bar>:first-child{justify-self:start}
 
-/* even grid: every cell filled in order, same cell size; each image shown whole at its own ratio inside its cell */
 .grid{display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));column-gap:var(--gx);row-gap:var(--gy);padding-top:clamp(40px,6vw,100px)}
-.grid .frame .img{background:none!important}
-/* square cells, image centred in its cell at its own ratio, like the reference */
-.grid .frame{aspect-ratio:1/1}
-.grid .img img{object-fit:contain;object-position:center center}
-/* images sit smaller in their cell and grow to fill it on hover */
-.grid .img img{transform:scale(.72);transition:transform .5s var(--ease)}
-.grid .card{transform:none!important}
-@media (hover:hover) and (pointer:fine){.grid .card.on .img img{transform:scale(1)}}
-/* captions hidden but still take their space, so the spacing stays the same */
-.grid .cap{visibility:hidden}
 .card{display:flex;flex-direction:column;gap:20px;min-width:0}
 @media (max-width:900px){.card{gap:12px}}
 .frame{aspect-ratio:4/5;max-width:100%;width:100%;position:relative;overflow:hidden;cursor:zoom-in;transition:opacity .4s var(--ease)}
@@ -145,52 +134,52 @@ header.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background
    3. Drag the whole folder into Netlify (Deploys tab). Done.
    Lines without src show a tonal placeholder; delete them once real images are in. */
 const LIBRARY = [
-  {type:"commercial",title:"Hello Kitty", src:"images/socksss-hello-kitty.jpg", r:0.6671},
-  {type:"commercial",title:"Bleue Burnham", src:"images/bleue-burnham-ring-01.jpg", r:0.8000},
-  {type:"commercial",title:"Bleue Burnham", src:"images/bleue-burnham-ring-02.jpg", r:0.8000},
-  {type:"commercial",title:"Bleue Burnham", src:"images/bleue-burnham-ring-03.jpg", r:0.8000},
-  {type:"commercial",title:"Bleue Burnham", src:"images/bleue-burnham-ring-04.jpg", r:0.8000},
-  {type:"commercial",title:"Bleue Burnham", src:"images/bleue-burnham-ring-05.jpg", r:0.8000},
-  {type:"commercial",title:"Bleue Burnham", src:"images/bleue-burnham-ring-06.jpg", r:0.8000},
-  {type:"commercial",title:"Bleue Burnham", src:"images/bleue-burnham-ring-07.jpg", r:0.8000},
-  {type:"commercial",title:"Bleue Burnham", src:"images/bleue-burnham-ring-08.jpg", r:0.8000},
-  {type:"commercial",title:"Bleue Burnham", src:"images/bleue-burnham-ring-09.jpg", r:0.8000},
-  {type:"commercial",title:"Bleue Burnham", src:"images/bleue-burnham-ring-10.jpg", r:0.8000},
-  {type:"commercial",title:"Strawberriesss", src:"images/strawberry.jpg", r:0.8000},
-  {type:"commercial",title:"SOCKSSS", src:"images/socksss-apple.jpg", r:0.8000},
-  {type:"commercial",title:"Madhappy", src:"images/madhappy.jpg", r:0.7500},
-  {type:"commercial",title:"SOCKSSS", src:"images/socksss-loafers.jpg", r:0.7725},
-  {type:"commercial",title:"SOCKSSS", src:"images/socksss-illustration.jpg", r:0.7483},
-  {type:"commercial",title:"AVAVAV", src:"images/avavav-6.jpg", r:0.7945},
-  {type:"commercial",title:"AVAVAV", src:"images/avavav-7.jpg", r:0.7945},
-  {type:"commercial",title:"Streetview", src:"images/streetview-4.jpg", r:0.8000},
-  {type:"commercial",title:"A1 Ecom Group", src:"images/a1-ecom-group-2.jpg", r:0.7994},
-  {type:"commercial",title:"A1 Ecom Group", src:"images/a1-ecom-group.jpg", r:0.6192},
-  {type:"commercial",title:"AVAVAV", src:"images/avavav-1.jpg", r:0.6667},
-  {type:"commercial",title:"AVAVAV", src:"images/avavav-2.jpg", r:0.6667},
-  {type:"commercial",title:"AVAVAV", src:"images/avavav-3.jpg", r:0.6667},
-  {type:"commercial",title:"AVAVAV", src:"images/avavav-4.jpg", r:0.6667},
-  {type:"commercial",title:"AVAVAV", src:"images/avavav-5.jpg", r:0.6667},
-  {type:"commercial",title:"Bleue Burnham", src:"images/bleue-burnham-1.jpg", r:0.8000},
-  {type:"commercial",title:"Bleue Burnham", src:"images/bleue-burnham-2.jpg", r:0.8000},
-  {type:"editorial", title:"Cherry", src:"images/cherry-1.jpg", r:0.6667},
-  {type:"editorial", title:"Cherry", src:"images/cherry-2.jpg", r:0.6667},
-  {type:"editorial", title:"Crocodile", src:"images/crocodile-1.jpg", r:1.2500},
-  {type:"editorial", title:"Crocodile", src:"images/crocodile-2.jpg", r:1.2500},
-  {type:"editorial", title:"Grapefruit", src:"images/grapefruit.jpg", r:0.6667},
-  {type:"editorial", title:"Grau × Acne Studios", src:"images/grau-acne-1.jpg", r:0.6671},
-  {type:"editorial", title:"Grau × Acne Studios", src:"images/grau-acne-2.jpg", r:0.6662},
-  {type:"editorial", title:"Grau × Acne Studios", src:"images/grau-acne-3.jpg", r:0.6662},
-  {type:"editorial", title:"Grau × Acne Studios", src:"images/grau-acne-4.jpg", r:0.6662},
-  {type:"editorial", title:"Motor", src:"images/motor.jpg", r:0.6667},
-  {type:"commercial",title:"SOCKSSS Rosebud", src:"images/socksss-rosebud.jpg", r:0.6667},
-  {type:"commercial",title:"SOCKSSS", src:"images/socksss.jpg", r:0.6667},
-  {type:"commercial",title:"SOCKSSS Moley", src:"images/socksss-moley-1.jpg", r:0.8000},
-  {type:"commercial",title:"SOCKSSS Moley", src:"images/socksss-moley-2.jpg", r:0.8000},
-  {type:"commercial",title:"Stockholm Surfboard Club", src:"images/stockholm-surfboard-club.jpg", r:0.6667},
-  {type:"editorial", title:"Streetview", src:"images/streetview-1.jpg", r:0.8000},
-  {type:"editorial", title:"Streetview", src:"images/streetview-2.jpg", r:0.8000},
-  {type:"editorial", title:"Streetview", src:"images/streetview-3.jpg", r:0.8000},
+  {type:"commercial",title:"Hello Kitty", src:"images/socksss-hello-kitty.jpg"},
+  {type:"commercial",title:"Bleue Burnham", src:"images/bleue-burnham-ring-01.jpg"},
+  {type:"commercial",title:"Bleue Burnham", src:"images/bleue-burnham-ring-02.jpg"},
+  {type:"commercial",title:"Bleue Burnham", src:"images/bleue-burnham-ring-03.jpg"},
+  {type:"commercial",title:"Bleue Burnham", src:"images/bleue-burnham-ring-04.jpg"},
+  {type:"commercial",title:"Bleue Burnham", src:"images/bleue-burnham-ring-05.jpg"},
+  {type:"commercial",title:"Bleue Burnham", src:"images/bleue-burnham-ring-06.jpg"},
+  {type:"commercial",title:"Bleue Burnham", src:"images/bleue-burnham-ring-07.jpg"},
+  {type:"commercial",title:"Bleue Burnham", src:"images/bleue-burnham-ring-08.jpg"},
+  {type:"commercial",title:"Bleue Burnham", src:"images/bleue-burnham-ring-09.jpg"},
+  {type:"commercial",title:"Bleue Burnham", src:"images/bleue-burnham-ring-10.jpg"},
+  {type:"commercial",title:"Strawberriesss", src:"images/strawberry.jpg"},
+  {type:"commercial",title:"SOCKSSS", src:"images/socksss-apple.jpg"},
+  {type:"commercial",title:"Madhappy", src:"images/madhappy.jpg"},
+  {type:"commercial",title:"SOCKSSS", src:"images/socksss-loafers.jpg"},
+  {type:"commercial",title:"SOCKSSS", src:"images/socksss-illustration.jpg"},
+  {type:"commercial",title:"AVAVAV", src:"images/avavav-6.jpg"},
+  {type:"commercial",title:"AVAVAV", src:"images/avavav-7.jpg"},
+  {type:"commercial",title:"Streetview", src:"images/streetview-4.jpg"},
+  {type:"commercial",title:"A1 Ecom Group", src:"images/a1-ecom-group-2.jpg"},
+  {type:"commercial",title:"A1 Ecom Group", src:"images/a1-ecom-group.jpg"},
+  {type:"commercial",title:"AVAVAV", src:"images/avavav-1.jpg"},
+  {type:"commercial",title:"AVAVAV", src:"images/avavav-2.jpg"},
+  {type:"commercial",title:"AVAVAV", src:"images/avavav-3.jpg"},
+  {type:"commercial",title:"AVAVAV", src:"images/avavav-4.jpg"},
+  {type:"commercial",title:"AVAVAV", src:"images/avavav-5.jpg"},
+  {type:"commercial",title:"Bleue Burnham", src:"images/bleue-burnham-1.jpg"},
+  {type:"commercial",title:"Bleue Burnham", src:"images/bleue-burnham-2.jpg"},
+  {type:"editorial", title:"Cherry", src:"images/cherry-1.jpg"},
+  {type:"editorial", title:"Cherry", src:"images/cherry-2.jpg"},
+  {type:"editorial", title:"Crocodile", src:"images/crocodile-1.jpg"},
+  {type:"editorial", title:"Crocodile", src:"images/crocodile-2.jpg"},
+  {type:"editorial", title:"Grapefruit", src:"images/grapefruit.jpg"},
+  {type:"editorial", title:"Grau × Acne Studios", src:"images/grau-acne-1.jpg"},
+  {type:"editorial", title:"Grau × Acne Studios", src:"images/grau-acne-2.jpg"},
+  {type:"editorial", title:"Grau × Acne Studios", src:"images/grau-acne-3.jpg"},
+  {type:"editorial", title:"Grau × Acne Studios", src:"images/grau-acne-4.jpg"},
+  {type:"editorial", title:"Motor", src:"images/motor.jpg"},
+  {type:"commercial",title:"SOCKSSS Rosebud", src:"images/socksss-rosebud.jpg"},
+  {type:"commercial",title:"SOCKSSS", src:"images/socksss.jpg"},
+  {type:"commercial",title:"SOCKSSS Moley", src:"images/socksss-moley-1.jpg"},
+  {type:"commercial",title:"SOCKSSS Moley", src:"images/socksss-moley-2.jpg"},
+  {type:"commercial",title:"Stockholm Surfboard Club", src:"images/stockholm-surfboard-club.jpg"},
+  {type:"editorial", title:"Streetview", src:"images/streetview-1.jpg"},
+  {type:"editorial", title:"Streetview", src:"images/streetview-2.jpg"},
+  {type:"editorial", title:"Streetview", src:"images/streetview-3.jpg"},
 ];
 
 function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
@@ -207,18 +196,27 @@ let view=[];
 function render(){
   view=ORDER.filter(i=>on[i.type]);
   if(!view.length)return;
+  const cols=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--cols'))||7;
+  const r=rng(SEED+7);
   grid.innerHTML='';
-  // fill the grid cell by cell, no empty slots
-  view.forEach((it,idx)=>{
-    const card=document.createElement('figure');
-    card.className='card';
-    card.innerHTML=`<button class="frame" aria-label="Open ${it.title}"><div class="img"><img src="${it.src}" alt="${it.title}" loading="lazy"></div></button>
-      <figcaption class="cap"><span>${it.title}</span></figcaption>`;
-    card.addEventListener('mouseenter',()=>{grid.classList.add('hovering');card.classList.add('on')});
-    card.addEventListener('mouseleave',()=>{grid.classList.remove('hovering');card.classList.remove('on')});
-    card.querySelector('.frame').onclick=()=>openLB(idx);
-    grid.appendChild(card);
-  });
+  let i=0,row=1;
+  while(i<view.length){
+    const k=cols>=7?2+Math.floor(r()*3):1+Math.floor(r()*2);
+    const slots=[...Array(cols).keys()].sort(()=>r()-.5).slice(0,k).sort((a,b)=>a-b);
+    for(const c of slots){
+      if(i>=view.length)break;
+      const it=view[i],idx=i;
+      const card=document.createElement('figure');
+      card.className='card';card.style.cssText=`grid-column:${c+1};grid-row:${row}`;
+      card.innerHTML=`<button class="frame" aria-label="Open ${it.title}"><div class="img" style="background:${it.src?'var(--ph)':bg(it.tone)}">${it.src?`<img src="${it.src}" alt="${it.title}" loading="lazy">`:''}</div></button>
+        <figcaption class="cap"><span>${it.title}</span></figcaption>`;
+      card.addEventListener('mouseenter',()=>{grid.classList.add('hovering');card.classList.add('on')});
+      card.addEventListener('mouseleave',()=>{grid.classList.remove('hovering');card.classList.remove('on')});
+      card.querySelector('.frame').onclick=()=>openLB(idx);
+      grid.appendChild(card);i++;
+    }
+    row++;
+  }
 }
 
 /* lightbox: steps through every image of every item */
