@@ -46,6 +46,10 @@ header.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background
 /* square cells, image centred in its cell at its own ratio, like the reference */
 .grid .frame{aspect-ratio:1/1}
 .grid .img img{object-fit:contain;object-position:center center}
+/* images sit smaller in their cell and grow to fill it on hover */
+.grid .img img{transform:scale(.72);transition:transform .5s var(--ease)}
+.grid .card{transform:none!important}
+@media (hover:hover) and (pointer:fine){.grid .card.on .img img{transform:scale(1)}}
 /* captions hidden but still take their space, so the spacing stays the same */
 .grid .cap{visibility:hidden}
 .card{display:flex;flex-direction:column;gap:20px;min-width:0}
