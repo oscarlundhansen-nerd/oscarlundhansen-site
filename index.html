@@ -40,14 +40,15 @@ header.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background
 .right{display:flex;gap:18px;justify-self:end}
 .bar>:first-child{justify-self:start}
 
-/* masonry: images at their own proportions, packed into columns with no holes */
-.grid{display:flex;align-items:flex-start;gap:var(--gx);padding-top:clamp(40px,6vw,100px)}
-.col{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:var(--gy)}
+/* even grid: every cell filled in order, same cell size; each image shown whole at its own ratio inside its cell */
+.grid{display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));column-gap:var(--gx);row-gap:var(--gy);padding-top:clamp(40px,6vw,100px)}
+.grid .frame .img{background:none!important}
+.grid .img img{object-fit:contain;object-position:center bottom}
 /* captions hidden but still take their space, so the spacing stays the same */
 .grid .cap{visibility:hidden}
 .card{display:flex;flex-direction:column;gap:20px;min-width:0}
 @media (max-width:900px){.card{gap:12px}}
-.frame{aspect-ratio:var(--r,4/5);max-width:100%;width:100%;position:relative;overflow:hidden;cursor:zoom-in;transition:opacity .4s var(--ease)}
+.frame{aspect-ratio:4/5;max-width:100%;width:100%;position:relative;overflow:hidden;cursor:zoom-in;transition:opacity .4s var(--ease)}
 .frame .img{position:absolute;inset:0}
 .img img{width:100%;height:100%;object-fit:cover;display:block}
 .card{transition:transform .5s var(--ease);will-change:transform}
@@ -200,22 +201,17 @@ let view=[];
 function render(){
   view=ORDER.filter(i=>on[i.type]);
   if(!view.length)return;
-  const cols=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--cols'))||7;
   grid.innerHTML='';
-  const colEls=[...Array(cols)].map(()=>{const c=document.createElement('div');c.className='col';grid.appendChild(c);return c});
-  const heights=Array(cols).fill(0);
+  // fill the grid cell by cell, no empty slots
   view.forEach((it,idx)=>{
-    // each image goes in the currently shortest column, so the columns stay level and no holes appear
-    const c=heights.indexOf(Math.min(...heights));
-    heights[c]+=1/(it.r||0.8)+0.12;
     const card=document.createElement('figure');
     card.className='card';
-    card.innerHTML=`<button class="frame" style="--r:${it.r||0.8}" aria-label="Open ${it.title}"><div class="img" style="background:var(--ph)"><img src="${it.src}" alt="${it.title}" loading="lazy"></div></button>
+    card.innerHTML=`<button class="frame" aria-label="Open ${it.title}"><div class="img"><img src="${it.src}" alt="${it.title}" loading="lazy"></div></button>
       <figcaption class="cap"><span>${it.title}</span></figcaption>`;
     card.addEventListener('mouseenter',()=>{grid.classList.add('hovering');card.classList.add('on')});
     card.addEventListener('mouseleave',()=>{grid.classList.remove('hovering');card.classList.remove('on')});
     card.querySelector('.frame').onclick=()=>openLB(idx);
-    colEls[c].appendChild(card);
+    grid.appendChild(card);
   });
 }
 
